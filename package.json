@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx webpack serve --config ./config/webpack.config.dev.js --progress"
+    "dev": "npx webpack serve --config ./config/webpack.config.dev.js --progress --open chrome"
   },
   "repository": {
     "type": "git",

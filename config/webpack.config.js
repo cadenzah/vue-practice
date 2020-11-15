@@ -15,6 +15,7 @@ module.exports = (env) => {
       filename: 'js/[name].js',
       path: buildPath,
     },
+    mode: 'production',
     module: {
       rules: [
         {

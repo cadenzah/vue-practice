@@ -15,6 +15,7 @@ module.exports = (env) => {
       filename: 'js/[name].js',
       path: buildPath,
     },
+    mode: 'development',
     module: {
       rules: [
         {
@@ -36,6 +37,7 @@ module.exports = (env) => {
       ],
     },
     devServer: {
+      publicPath: '/',
       contentBase: buildPath,
       compress: true,
       port: 3000,
