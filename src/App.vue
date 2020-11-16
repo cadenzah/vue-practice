@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <card :message="message"></card>
-    {{ message }}
+    <card
+      :message="message"
+      @customclick="customClick"
+    ></card>
+    <p >{{ count }}</p>
   </div>
 </template>
 
@@ -12,7 +15,14 @@ export default {
   data() {
     return {
       message: 'Hello, world!',
+      count: 0,
     };
+  },
+  methods: {
+    customClick: function() {
+      // alert('customclick')
+      this.count++;
+    },
   },
   components: {
     Card: Card,
