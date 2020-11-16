@@ -20,6 +20,37 @@ Vue 인스턴스 옵션의 `component` 객체의 경우를 예로 들면, 여기
 
 즉, `this.$emit()`은 부모-자식 컴포넌트 간의 고유한 이벤트 버스라고 간주할 수 있다.
 
+### `computed` == React의 `usememo`
+
+`methods`에 등록한 함수는 리렌더링마다 항상 다시 실행되지만, `computed`는 *해당 값이 의존하는 `data`가 변하지 않는다면* 다시 실행되지 않고 따라서 값도 캐싱된(미리 계산된) 것이 고스란히 다시 반환된다.
+
+### `computed` == `Vuex`의 `getters`
+로컬 컴포넌트에서 *지역 computed*와 `mapGetters`를 함께 사용하려면, 객체 해체 연산자(`...`)를 사용하여 합치자
+
+```js
+import { mapGetters } from 'vuex';
+
+computed: {
+  ...mapGetters([
+    'getCounter'
+  ]),
+  anotherLocalCounter: function() {
+
+  },
+}
+```
+
+### `methods` === `Vuex`의 `mutations` -> `commit()`으로 트리거
+- 둘 다 상태를 바꾸지만, `mutation`은 동기, `action`은 비동기 작업
+- `mutations`에 정의한 메서드는 직접 접근하여 실행 불가. 반드시 `commit`을 통하여 간접적으로 호출홰야 한다.
+- `commit(<mutation_name>, payload)`로 부가 데이터 전달, 메서드에서 받을 때는 `method(state, payload)`로 정의하여 부가 데이터 전달받음
+
+### `methods` === `Vuex`의 `actions` -> `dispatch()`으로 트리거
+- 지연된 동작(setTimeout), 네트워크 통신 등 -> 결과를 받아올 타이밍이 예측 불가인 로직
+- `actions`에 정의한 메서드는 직접 접근하여 실행 불가. 반드시 `dispatch`을 통하여 간접적으로 호출홰야 한다.
+- `dispatch(<mutation_name>, payload)`로 부가 데이터 전달, 메서드에서 받을 때는 `method(state, payload)`로 정의하여 부가 데이터 전달받음
+- `actions` 내에서 `mutations`를 사용하는 구조는, 비동기적인(임의의) 타이밍에 동기적인 동작을 취하더라도 이를 추적할 수 있도록 기록하기 위한 단서 제공
+
 ## References
 
 - [맨 땅에 Vue.js 시리즈](https://medium.com/@hozacho/%EB%A7%A8%EB%95%85%EC%97%90-vuejs-%EB%A6%AC%EC%8A%A4%ED%8A%B8-462d88047893)

@@ -1,24 +1,25 @@
 <template>
   <div>
     <hr />
-    Child counter: {{$store.state.counter}} <br />
-    <button>+</button>
-    <button>-</button>
+    Child counter: {{getCounter}} <br />
+    <button @click="addCounter">+</button>
+    <button @click="subCounter">-</button>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   props: ['num'],
-  methods: {
-    onButtonClick: function(e) {
-      this.$emit('customclick', e);
-    },
-    onCustomClick: function() {
-      alert('Card')
-    }
-  },
-}
+  computed: mapGetters([
+    'getCounter'
+  ]),
+  methods: mapMutations([
+    'addCounter',
+    'subCounter',
+  ]),
+};
 </script>
 
 <style>

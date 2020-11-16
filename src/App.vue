@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    Parent counter: {{$store.state.counter}} <br />
+    Parent counter: {{parentCounter}} <br />
     <button
       @click="addCounter"
     >
@@ -11,9 +11,7 @@
     >
       -
     </button>
-    <card
-      :num="counter"
-    ></card>
+    <card></card>
   </div>
 </template>
 
@@ -26,17 +24,26 @@ export default {
   //     counter: 0,
   //   };
   // },
+  computed: {
+    parentCounter: function() {
+      return this.$store.getters.getCounter;
+    },
+  },
   methods: {
     addCounter() {
-      this.$store.state.counter++;
+      // this.$store.mutations.addCounter(); // Invalid
+      this.$store.commit('addCounter'); 
     },
     subCounter() {
-      this.$store.state.counter--;
+      this.$store.state.counter--; // okay, but not preferred
     },
   },
   components: {
     card: Card,
   },
+  created: function() {
+    console.log(this)
+  }
 };
 </script>
 
