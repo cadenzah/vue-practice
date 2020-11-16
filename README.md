@@ -27,3 +27,4 @@ Vue 인스턴스 옵션의 `component` 객체의 경우를 예로 들면, 여기
   - [실제 예시 + 쉬운 설명](https://blog.naver.com/bkcaller/221461986249)
 - [[Vue] 개발환경 만들기 (without vue-cli)](https://velog.io/@kyusung/Vue-app-sfc-without-vue-cli)
 - [프론트엔드 개발환경의 이해: 웹팩(심화)](https://jeonghwan-kim.github.io/series/2020/01/02/frontend-dev-env-webpack-intermediate.html)
+- [Vuex 시작하기 시리즈](https://joshua1988.github.io/web-development/vuejs/vuex-start/)

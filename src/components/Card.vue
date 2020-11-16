@@ -1,14 +1,15 @@
 <template>
   <div>
-    우와! 이것이 새로운 카드이다. 그 상대는~ {{message}}
-    <button @click="onButtonClick">증가증가</button>
-    <p @customclick="onCustomClick">으으음?</p>
+    <hr />
+    Child counter: {{$store.state.counter}} <br />
+    <button>+</button>
+    <button>-</button>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['message'],
+  props: ['num'],
   methods: {
     onButtonClick: function(e) {
       this.$emit('customclick', e);

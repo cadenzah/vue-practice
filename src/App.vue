@@ -1,10 +1,19 @@
 <template>
   <div id="app">
+    Parent counter: {{$store.state.counter}} <br />
+    <button
+      @click="addCounter"
+    >
+      +
+    </button>
+    <button
+      @click="subCounter"
+    >
+      -
+    </button>
     <card
-      :message="message"
-      @customclick="customClick"
+      :num="counter"
     ></card>
-    <p >{{ count }}</p>
   </div>
 </template>
 
@@ -12,20 +21,21 @@
 import Card from './components/Card.vue';
 
 export default {
-  data() {
-    return {
-      message: 'Hello, world!',
-      count: 0,
-    };
-  },
+  // data() {
+  //   return {
+  //     counter: 0,
+  //   };
+  // },
   methods: {
-    customClick: function() {
-      // alert('customclick')
-      this.count++;
+    addCounter() {
+      this.$store.state.counter++;
+    },
+    subCounter() {
+      this.$store.state.counter--;
     },
   },
   components: {
-    Card: Card,
+    card: Card,
   },
 };
 </script>
