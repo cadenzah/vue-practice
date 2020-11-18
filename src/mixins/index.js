@@ -1,5 +1,5 @@
-import dialog from './dialog';
+import dialogMixin from './dialog';
 
 export {
-  dialog,
+  dialogMixin,
 };

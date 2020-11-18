@@ -1,7 +1,7 @@
 const DialogMixin = {
   data: function() {
     return {
-      dialog: false,
+      dialog: true,
     };
   },
   methods: {
