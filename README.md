@@ -51,6 +51,13 @@ computed: {
 - `dispatch(<mutation_name>, payload)`로 부가 데이터 전달, 메서드에서 받을 때는 `method(state, payload)`로 정의하여 부가 데이터 전달받음
 - `actions` 내에서 `mutations`를 사용하는 구조는, 비동기적인(임의의) 타이밍에 동기적인 동작을 취하더라도 이를 추적할 수 있도록 기록하기 위한 단서 제공
 
+---
+
+### Vue.js Mixins
+- 믹스인이 가지고 있는 옵션의 내용을 컴포넌트에 고스란히 Merge
+  - 옵션의 `data`나 `methods` 등에서 겹치는 식별자가 있다면 컴포넌트의 것을 더 우선시
+- 믹스인은 믹스인이 적용되는 컴포넌트의 초기화보다 먼저 초기화된다 → 라이프사이클 고려 필요
+
 ## References
 
 - [맨 땅에 Vue.js 시리즈](https://medium.com/@hozacho/%EB%A7%A8%EB%95%85%EC%97%90-vuejs-%EB%A6%AC%EC%8A%A4%ED%8A%B8-462d88047893)
