@@ -1,14 +1,39 @@
 # vue-practice
 Let's learn Vue.js ASAP!
 
-## Notes
+## Index
+- Single File Component
+- Vue.js Fundamentals
+- Vuex
+- Vue.js Mixins
+- Vue Router
 
-### Single File Component 구조에서 각 블록들의 역할
+---
+
+## Single File Component
+
+### 각 블록들의 역할
 TL;DR: `<template>`이라는 평면적인 뷰에 대하여 프로그래밍적인 의미(Semantic)와 논리를 부여하는 것이 `<script>`의 역할. `<script>`에 적힌 Vue 인스턴스 옵션을 기반으로 뷰에 적힌 코드들의 의미를 파악할 수 있다.
 
 한 `.vue` 파일 스코프 내에서, `<script>` 내에서 정의되거나 선언되는 모든 식별자들은 해당 파일의 `<template>` 내에서만 통용되는 지역적인 값이다.
 
 Vue 인스턴스 옵션의 `component` 객체의 경우를 예로 들면, 여기에 선언되어야만 `<template>` 내에서 뷰 블록으로서 사용될 수 있다.
+
+### SFC 구조 하에서는 Vue 인스턴스의 옵션에서 `template` 옵션값을 사용할 수 없다
+해당 옵션을 사용하여 컴포넌트를 배치하면 아래와 같이 경고를 발생시킨다.
+
+```
+[Vue warn]: You are using the runtime-only build of Vue where the template compiler is not available. Either pre-compile the templates into render functions, or use the compiler-included build.
+```
+
+반드시 `.vue` 파일을 별도로 작성한 뒤 로드하여 `<template>` 블록 내에 배치할 것.
+
+---
+
+## Vue.js Fundamentals
+
+### `.vue` 파일 `import`할 때에는 확장자를 생략하면 안 된다
+`.jsx`와 달리 Webpack 로더가 알아서 처리 안 해준다.
 
 ### 컴포넌트 이름의 대소문자
 `component` 객체 내에서 대문자로 등록된 컴포넌트는 `<template>` 내에서 대소문자 구분 없이 사용되더라도 제대로 렌더링된다. 하지만 소문자로 등록된 컴포넌트는 반드시 `<template>` 내에서도 소문자로 사용되어야 한다. 대소문자 구분 못하는 HTML의 특성이 적당히 반영된듯
@@ -23,6 +48,10 @@ Vue 인스턴스 옵션의 `component` 객체의 경우를 예로 들면, 여기
 ### `computed` == React의 `usememo`
 
 `methods`에 등록한 함수는 리렌더링마다 항상 다시 실행되지만, `computed`는 *해당 값이 의존하는 `data`가 변하지 않는다면* 다시 실행되지 않고 따라서 값도 캐싱된(미리 계산된) 것이 고스란히 다시 반환된다.
+
+---
+
+## Vue.js Vuex
 
 ### `computed` == `Vuex`의 `getters`
 로컬 컴포넌트에서 *지역 computed*와 `mapGetters`를 함께 사용하려면, 객체 해체 연산자(`...`)를 사용하여 합치자
@@ -53,10 +82,23 @@ computed: {
 
 ---
 
-### Vue.js Mixins
+## Vue.js Mixins
 - 믹스인이 가지고 있는 옵션의 내용을 컴포넌트에 고스란히 Merge
   - 옵션의 `data`나 `methods` 등에서 겹치는 식별자가 있다면 컴포넌트의 것을 더 우선시
 - 믹스인은 믹스인이 적용되는 컴포넌트의 초기화보다 먼저 초기화된다 → 라이프사이클 고려 필요
+
+---
+
+## Vue Router
+- `this.$router`: Router 객체; `.push()`, `.go()` 등의 메서드 호출에 사용
+- `this.$route`: 현재 라우트 위치; `.params`, `.query`, `.hash` 등의 값들에 접근하여 활용 가능
+- `<router-view>`는 해당 컴포넌트로 라우팅되었을 때 기준으로 최상위 outlet을 표시하는 곳; 즉, 최상위 경로와 일치하는 컴포넌트를 렌더링
+  - 현재 라우팅 URL을 기준으로, 하위 라우팅이 변경됨에 따라(`/` 기준) `<router-view>` 위치에 어떤 컴포넌트가 표시되는지가 달라진다 
+  - 그래서 `<router-view>`는 중첩 가능. 라우팅이 중첩되는 경우, 자신의 하위 라우트를 표시할 영역을 재귀적으로 `<template>`에 표시
+  - 그 바깥에 있는 다른 마크업들은 라우팅과 무관하게 항상 존재하는 요소가 된다
+- Webpack-dev-server를 사용중이라면, `devServer` 옵션에서 `historyApiFallback`을 `true`로 설정해야 한다
+  - 그래야 '/' 이외의 경로로 진입시 라우팅이 제대로 이루어진다 (｢wds｣: 404s will fallback to /index.html)
+
 
 ## References
 

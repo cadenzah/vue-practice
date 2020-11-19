@@ -12,6 +12,8 @@
       -
     </button>
     <card></card>
+    <router-view></router-view>
+    <p>이 위에는 라우팅 별 페이지가 나와야 합니다</p>
   </div>
 </template>
 

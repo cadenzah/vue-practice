@@ -41,7 +41,7 @@ module.exports = (env) => {
       contentBase: buildPath,
       compress: true,
       port: 3000,
-      // historyApiFallback: true,
+      historyApiFallback: true,
       
     },
     plugins: [
