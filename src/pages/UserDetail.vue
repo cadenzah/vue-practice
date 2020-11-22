@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <p class="user-detail">Depth 2: {{userId}} 님의 정보 페이지입니다</p>
+  <div class="user-detail">
+    <p>Depth 2: {{userId}} 님의 정보 페이지입니다</p>
     <button @click="navigatePrev">뒤로가기!</button>
   </div>
 </template>
@@ -22,6 +22,6 @@ export default {
 
 <style scoped>
 .user-detail {
-  color: darkorange;
+  background-color: darkorange;
 }
 </style>

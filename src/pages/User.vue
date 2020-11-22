@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="user">
     <p>Depth 1: 사용자 상세 페이지</p>
     <p>this.$route.params를 통하여 동적 인자를 받아오는 연습을 위한 페이지입니다</p>
     <router-view></router-view>
@@ -18,6 +18,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.user {
+  background-color: skyblue;
+}
 </style>
