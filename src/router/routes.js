@@ -4,6 +4,7 @@ import {
   Detail,
   User,
   UserDetail,
+  NotFound,
 } from '../pages';
 
 const routes = [
@@ -29,6 +30,10 @@ const routes = [
       },
     ],
   },
+  {
+    path: '*',
+    component: NotFound,
+  }
 ];
 
 export default routes;

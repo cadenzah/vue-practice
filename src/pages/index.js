@@ -3,6 +3,7 @@ import Test from './Test.vue';
 import Detail from './Detail.vue';
 import User from './User.vue';
 import UserDetail from './UserDetail.vue';
+import NotFound from './NotFound.vue';
 
 export {
   Root,
@@ -10,4 +11,5 @@ export {
   Detail,
   User,
   UserDetail,
+  NotFound,
 };
