@@ -8,6 +8,7 @@ Let's learn Vue.js ASAP!
 - Vue.js Directives
 - Vuex
 - Vue Router
+- Vue.js Test
 
 ---
 
@@ -144,6 +145,15 @@ computed: {
 - Webpack-dev-server를 사용중이라면, `devServer` 옵션에서 `historyApiFallback`을 `true`로 설정해야 한다
   - 그래야 '/' 이외의 경로로 진입시 라우팅이 제대로 이루어진다 (｢wds｣: 404s will fallback to /index.html)
 
+---
+
+## Vue.js Test
+
+### 환경 설정 관련 문제해결
+- [`@vue/cli-plugin-unit-jest`](https://github.com/vuejs/vue-cli/blob/dev/packages/%40vue/cli-plugin-unit-jest/presets/default/jest-preset.js)의 프리셋을 기반으로 설정
+  - 그 외 config 파일 해설([참조](https://heropy.blog/2020/05/20/vue-test-with-jest/))를 참고
+- `vue-jest`가 `@babel/core` 모듈을 찾지 못하는 이슈가 있다. 내부에서 `peerDependencies`로 `babel-core`를 사용하고 있기 때문. 이는 Babel이 7버전 이후부터 라이브러리의 모듈 이름 규칙을 `@babel/`로 변경함에 따라 발생한 이슈이다.
+  - `babel-core`와 `@babel/core`를 연결해주는 Bridge 라이브러리를 사용하여 해결([참조1](https://stackoverflow.com/questions/54677044/vue-jest-cant-find-babel)/[참조2](https://github.com/vuejs/vue-jest/issues/160))
 
 ## References
 
@@ -156,3 +166,4 @@ computed: {
   - [Should a component commit a mutation directly?(Mutation과 Action의 차이)](https://github.com/vuejs/vuex/issues/587)
   - [Vuex Action vs Mutations](https://stackoverflow.com/questions/39299042/vuex-action-vs-mutations)
 - [Vue.js 라이프사이클 이해하기](https://medium.com/witinweb/vue-js-%EB%9D%BC%EC%9D%B4%ED%94%84%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-7780cdd97dd4)
+- [Jest와 Vue Test Utils(VTU)로 Vue 컴포넌트 단위(Unit) 테스트](https://heropy.blog/2020/05/20/vue-test-with-jest/)

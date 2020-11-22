@@ -18,7 +18,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import { dialogMixin } from '../mixins';
+import { dialogMixin } from '../../mixins';
 
 export default {
   mixins: [

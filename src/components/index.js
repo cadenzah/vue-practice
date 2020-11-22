@@ -1,4 +1,4 @@
-import Card from './Card.vue';
+import Card from './Card';
 import Navigation from './Navigation.vue';
 
 export {
