@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <navigation></navigation>
+    <hr />
     Parent counter: {{parentCounter}} <br />
     <button
       @click="addCounter"
@@ -18,9 +20,16 @@
 </template>
 
 <script>
-import Card from './components/Card.vue';
+import {
+  Card,
+  Navigation,
+} from './components';
 
 export default {
+  components: {
+    card: Card,
+    navigation: Navigation,
+  },
   // data() {
   //   return {
   //     counter: 0,
@@ -39,9 +48,6 @@ export default {
     subCounter() {
       this.$store.state.counter--; // okay, but not preferred
     },
-  },
-  components: {
-    card: Card,
   },
   created: function() {
     console.log(this)
