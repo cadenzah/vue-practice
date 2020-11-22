@@ -80,6 +80,15 @@ computed: {
 - `dispatch(<mutation_name>, payload)`로 부가 데이터 전달, 메서드에서 받을 때는 `method(state, payload)`로 정의하여 부가 데이터 전달받음
 - `actions` 내에서 `mutations`를 사용하는 구조는, 비동기적인(임의의) 타이밍에 동기적인 동작을 취하더라도 이를 추적할 수 있도록 기록하기 위한 단서 제공
 
+### Action과 Mutation의 차이
+- Mutation은 직접적으로 Vuex Store를 갱신하는 동작
+  - Mutation을 통하여 Store가 (동기적으로) 변경되는 과정들을 순서대로 추적(Debug)할 수 있다
+- Action은 Store를 비롯한 앱 로직을 변경하는 행위를 포괄적으로 추상화하는 컨트롤러 역할
+  - "컴포넌트는 내부 동작들을 구체적으로 알아서는 안 된다"
+- 뷰 안에서 발생하는 명시적인 동작들은 모두 비동기로 취급되어야 한다. JS 특성상, 여러 동작들이 예측불가로 트리거되므로. 이것을 담당하는 추상화가 Action
+  - 비동기 Action 작업들이 동기적 순서를 부여받았을때 그때 비로소 실행되는, Vue에 영향을 가하는 동작들은 Mutation이 담당
+- 결국 중요한 것은 Debug의 용이성, 그리고 비동기 / 동기 작업들에 대한 관심사 분리
+
 ---
 
 ## Vue.js Mixins
@@ -108,4 +117,6 @@ computed: {
 - [[Vue] 개발환경 만들기 (without vue-cli)](https://velog.io/@kyusung/Vue-app-sfc-without-vue-cli)
 - [프론트엔드 개발환경의 이해: 웹팩(심화)](https://jeonghwan-kim.github.io/series/2020/01/02/frontend-dev-env-webpack-intermediate.html)
 - [Vuex 시작하기 시리즈](https://joshua1988.github.io/web-development/vuejs/vuex-start/)
+  - [Should a component commit a mutation directly?(Mutation과 Action의 차이)](https://github.com/vuejs/vuex/issues/587)
+  - [Vuex Action vs Mutations](https://stackoverflow.com/questions/39299042/vuex-action-vs-mutations)
 - [Vue.js 라이프사이클 이해하기](https://medium.com/witinweb/vue-js-%EB%9D%BC%EC%9D%B4%ED%94%84%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-7780cdd97dd4)
