@@ -19,6 +19,27 @@ TL;DR: `<template>`이라는 평면적인 뷰에 대하여 프로그래밍적인
 
 Vue 인스턴스 옵션의 `component` 객체의 경우를 예로 들면, 여기에 선언되어야만 `<template>` 내에서 뷰 블록으로서 사용될 수 있다.
 
+### `css-loader` 관련 오류
+`css-loader`와 `vue-style-locader`가 충돌하여, 스타일이 적용되지 않는 버그가 있었다. `css-loader` 4.x.x 버전에서 있었던 이슈인데 5.x.x 버전에서도 여전히 해당 이슈가 존재하는 듯하다. ([관련 링크](https://github.com/vuejs/vue-style-loader/issues/46#issuecomment-670624576))
+
+이를 픽스하려면 아래와 같이 빌드 설정을 추가해주면 된다.
+
+```js
+// webpack.config.js
+...
+{
+  test: /\.css$/,
+  use: [
+    'vue-style-loader', {
+      loader: 'css-loader',
+      options: {
+        esModule: false,
+      },
+    },
+  ],
+},
+```
+
 ### SFC 구조 하에서는 Vue 인스턴스의 옵션에서 `template` 옵션값을 사용할 수 없다
 해당 옵션을 사용하여 컴포넌트를 배치하면 아래와 같이 경고를 발생시킨다.
 
