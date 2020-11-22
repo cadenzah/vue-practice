@@ -4,6 +4,11 @@
     Child counter: {{getCounter}} <br />
     <button @click="addCounter">+</button>
     <button @click="subCounter">-</button>
+
+    <!-- Custom directive practice-->
+    <p v-conditional:[getCounter]="10">10이 되면 카운터가 보입니다</p>
+    <p v-conditional:[getCounter]="20">20이 되면 보이는 카운터입니다.</p>
+
     <hr />
     <p v-if="_dialog">이 메시지가 보일까?</p>
     <button @click="showMessage">보여줘</button>

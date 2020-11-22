@@ -4,8 +4,9 @@ Let's learn Vue.js ASAP!
 ## Index
 - Single File Component
 - Vue.js Fundamentals
-- Vuex
 - Vue.js Mixins
+- Vue.js Directives
+- Vuex
 - Vue Router
 
 ---
@@ -72,6 +73,27 @@ Vue 인스턴스 옵션의 `component` 객체의 경우를 예로 들면, 여기
 
 ---
 
+## Vue.js Mixins
+- 믹스인이 가지고 있는 옵션의 내용을 컴포넌트에 고스란히 Merge
+  - 옵션의 `data`나 `methods` 등에서 겹치는 식별자가 있다면 컴포넌트의 것을 더 우선시
+- 믹스인은 믹스인이 적용되는 컴포넌트의 초기화보다 먼저 초기화된다 → 라이프사이클 고려 필요
+
+---
+
+## Vue.js Directives
+- Mixin은 "기능을 확장할 때"에, Directive는 "HTML 요소에 특정 동작 방식을 부여하고자 할 때"에 사용
+- Directive에서 사용되는 각각의 Hook들(`bind`, `update` 등)은 고정된 형식의 함수
+- `function(el, binding, vnode) { }`
+  - `binding.arg`: 대괄호 통하여 전달하는 Dynamic Directive Argument의 값
+    - 단일값으로만 전달 가능
+  - `binding.value`: 해당 디렉티브에 대한 속성값
+    - 값 평가되므로, JS의 모든 타입 전달 가능 - 원시값, 객체 등
+  - `vnode`는 해당 디렉티브가 실행되는 HTML 요소에 대한 추상화 객체(`VNode`)
+    - `vnode.context`를 통하여 현재 컴포넌트(`VueComponent`)에 동일하게 접근 가능
+- `bind`와 `update`의 로직이 동일하다면 하나로 합쳐서 사용해도 된다. 즉, directive 등록시 객체 대신 함수만 전달하는 것
+
+---
+
 ## Vue.js Vuex
 
 ### `computed` == `Vuex`의 `getters`
@@ -109,13 +131,6 @@ computed: {
 - 뷰 안에서 발생하는 명시적인 동작들은 모두 비동기로 취급되어야 한다. JS 특성상, 여러 동작들이 예측불가로 트리거되므로. 이것을 담당하는 추상화가 Action
   - 비동기 Action 작업들이 동기적 순서를 부여받았을때 그때 비로소 실행되는, Vue에 영향을 가하는 동작들은 Mutation이 담당
 - 결국 중요한 것은 Debug의 용이성, 그리고 비동기 / 동기 작업들에 대한 관심사 분리
-
----
-
-## Vue.js Mixins
-- 믹스인이 가지고 있는 옵션의 내용을 컴포넌트에 고스란히 Merge
-  - 옵션의 `data`나 `methods` 등에서 겹치는 식별자가 있다면 컴포넌트의 것을 더 우선시
-- 믹스인은 믹스인이 적용되는 컴포넌트의 초기화보다 먼저 초기화된다 → 라이프사이클 고려 필요
 
 ---
 
