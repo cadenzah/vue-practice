@@ -72,6 +72,124 @@ Vue 인스턴스 옵션의 `component` 객체의 경우를 예로 들면, 여기
 
 `methods`에 등록한 함수는 리렌더링마다 항상 다시 실행되지만, `computed`는 *해당 값이 의존하는 `data`가 변하지 않는다면* 다시 실행되지 않고 따라서 값도 캐싱된(미리 계산된) 것이 고스란히 다시 반환된다.
 
+### Slot == React의 `children`
+다음과 같은 구조의 템플릿 마크업을 떠올려보면,
+
+```vue
+<!-- App.vue -->
+<template>
+  <div>
+    <Child></Child>
+  </div>
+</template>
+```
+`<Child>`가 표현하고자 하는 내용은 해당 컴포넌트의 `.vue` 파일 내에서 구체적으로 정의되어야 한다. 예를 들어, 위 마크업에서 `<Child>` 컴포넌트를 통하여 어떤 문장을 표시하는 기능을 한다면, 이 컴포넌트는 다음과 같이 렌더링될 것이다.
+
+```vue
+<!-- App.vue -->
+<template>
+  <div>
+    <p>Child 컴포넌트의 내용은 이 마크업으로 대체되었다</p>
+  </div>
+<template>
+```
+
+여기서 만약, `<Child>`에서 사용되는 내용(`<p>`에 표시되는 메시지 내용)을 부모 컴포넌트에서 전달하여 재사용성을 높이고자 한다면 어떻게 해야 할까? 즉, 부모 컴포넌트에서 사용되는 데이터 또는 메서드 등을 자식 컴포넌트에서 사용하고자 한다면 어떻게 할까? 위의 경우라면 `<Child>` 컴포넌트로 `props`를 사용하여 데이터들을 전달해야 한다. 또한, `<Child>` 상에서도 이들을 전달받아 사용가능한 형태로 코드를 작성해주어야 한다.
+
+```vue
+<!-- App.vue -->
+<template>
+  <div>
+    <Child :message="message"></Child>
+  </div>
+<template>
+
+<!-- Child.vue -->
+<!-- 구현 생략 -->
+```
+
+여기는 문제가 있다. 우선, 번거롭다. 데이터를 전달하기 위하여 props를 전달하고 자식 컴포넌트 측에서 대응 코드를 작성하는 등 추가 작업이 필요하다. 또한, 데이터 관리 포인트가 늘어난다. 앱의 복잡도가 늘어나고 전달해야 하는 데이터가 늘어난다면 이는 바람직하지 않다.
+
+여기서 도입되는 개념이 **제어의 역전(Inversion of Control)**이다. 즉, 자식 컴포넌트 내에서 표현되는 뷰와 관련 로직을 부모 컴포넌트 쪽에서 관리할 수 있도록 해주는 것이다. 이는 자식 컴포넌트의 로직에 대한 책임이 부모 컴포넌트 쪽으로 이동하는 효과를 가진다. 이를 구현하기 위한 뷰 문법이 **Slot**이다.
+
+```vue
+<!-- App.vue -->
+<template>
+  <div>
+    <Child>
+      <p>{{message}}</p>
+    </Child>
+  </div>
+</template>
+
+<!-- Child.vue -->
+<template>
+  <slot></slot>
+</template>
+```
+
+이렇게 되면, `<Child>`의 자식으로 전달된 마크업 요소들은 `<slot>`을 대체하게 된다. 즉, 기존에 필요했던 자식 컴포넌트로서의 역할을 동일하게 수행한다. 그러면서 동시에, 자식 요소에서 필요로 하는 데이터는 동일하게 `<Child>` 컴포넌트의 스코프 내에서 관리할 수 있게 된다. 관리 포인트가 하나로 단일화된 것이다. 이를 통하여, 더 적은 코드로 재사용성을 확보할 수 있게 되었고, `<Child>` 컴포넌트는 가지고 있는 로직이 적은 가벼운 컴포넌트로 변했다.
+
+### Named slot
+
+```vue
+<!-- Child.vue -->
+<template>
+  <p>
+    <slot name="header"></slot>
+  </p>
+</template>
+
+<!-- App.vue -->
+<template>
+  <div>
+    <Child>
+      <template v-slot:header>
+        전달할 메시지를 여기에 적어보자
+      </template>
+    </Child>
+  </div>
+</template>
+```
+
+- 여러 슬롯을 사용하는 것도 가능하다. `<template v-slot:slot_name>` 식으로 전달하면 해당 마크업 아래의 내용을 원하는 위치의 슬롯에 전달할 수 있다.
+  - 위 형식 없이 이름없는 슬롯을 사용하는 것은 Default Slot으로 취급된다.
+  - Default Slot은 `<template v-slot:default>`과 동일하다
+
+### Slot에 속성 전달하기 - Scoped Slot
+
+만약 `<slot>`을 정의하고 있는 자식 컴포넌트에서 데이터 또는 메서드를 사용하고 있고, 이를 부모 컴포넌트 측에서 사용할 수 있도록 제공하려면 어떻게 할까?
+
+자식 컴포넌트의 `<slot>`에 `v-bind` 속성을 사용하여 전달하고자 하는 데이터를 속성값으로 명시하고, 부모 컴포넌트에서는 `v-slot` 속성의 속성값을 통하여 이에 접근할 수 있다. 이렇게 `<slot>` 요소에 연결된 속성을 **Slot props**라고 부른다.
+
+```vue
+<!-- Child.vue -->
+<template>
+  <p>
+    <slot name="default" v-bind:child_slot="message">
+    </slot>
+  </p>
+</template>
+<script>
+export default {
+  data: function() {
+    return {
+      message: 'Data from Child component\'s slot',
+    };
+  },
+};
+</script>
+
+<!-- App.vue Component -->
+<template>
+  <div>
+    <template v-slot:default="child_slot">
+      {{child_slot.message}} <!-- data from Child component -->
+    </template>
+  </div>
+</template>
+```
+
 ---
 
 ## Vue.js Mixins
