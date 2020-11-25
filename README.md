@@ -301,3 +301,4 @@ computed: {
   - [Vuex Action vs Mutations](https://stackoverflow.com/questions/39299042/vuex-action-vs-mutations)
 - [Vue.js 라이프사이클 이해하기](https://medium.com/witinweb/vue-js-%EB%9D%BC%EC%9D%B4%ED%94%84%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-7780cdd97dd4)
 - [Jest와 Vue Test Utils(VTU)로 Vue 컴포넌트 단위(Unit) 테스트](https://heropy.blog/2020/05/20/vue-test-with-jest/)
+- [Vue 기본 강좌 7-1. slot](https://www.youtube.com/watch?v=qZUV1-FA0-Q)
