@@ -183,9 +183,25 @@ export default {
 <!-- App.vue Component -->
 <template>
   <div>
-    <template v-slot:default="child_slot">
+    <Child>
+      <template v-slot:default="child_slot">
+        {{child_slot.message}} <!-- data from Child component -->
+      </template>
+    </Child>
+  </div>
+</template>
+```
+
+만약 자식 컴포넌트에 `<slot>`이 Default Slot 단 하나뿐이고 그 외의 Named slot이 존재하지 않는다면, 바로 위의 Slot 사용례는 간소화할 수 있습니다.
+
+```vue
+<!-- App.vue -->
+<!-- 아래 마크업은 바로 위의 예제와 동일하게 작동 -->
+<template>
+  <div>
+    <Child v-slot="child_slot">
       {{child_slot.message}} <!-- data from Child component -->
-    </template>
+    </Child>
   </div>
 </template>
 ```
