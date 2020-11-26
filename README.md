@@ -6,6 +6,7 @@ Let's learn Vue.js ASAP!
 - Vue.js Fundamentals
 - Vue.js Mixins
 - Vue.js Directives
+- Vue.js Render Function
 - Vuex
 - Vue Router
 - Vue.js Test
@@ -192,7 +193,7 @@ export default {
 </template>
 ```
 
-만약 자식 컴포넌트에 `<slot>`이 Default Slot 단 하나뿐이고 그 외의 Named slot이 존재하지 않는다면, 바로 위의 Slot 사용례는 간소화할 수 있습니다.
+만약 자식 컴포넌트에 `<slot>`이 Default Slot 단 하나뿐이고 그 외의 Named slot이 존재하지 않는다면, 바로 위의 Slot 사용례는 간소화할 수 있다.
 
 ```vue
 <!-- App.vue -->
@@ -226,6 +227,19 @@ export default {
   - `vnode`는 해당 디렉티브가 실행되는 HTML 요소에 대한 추상화 객체(`VNode`)
     - `vnode.context`를 통하여 현재 컴포넌트(`VueComponent`)에 동일하게 접근 가능
 - `bind`와 `update`의 로직이 동일하다면 하나로 합쳐서 사용해도 된다. 즉, directive 등록시 객체 대신 함수만 전달하는 것
+
+---
+
+## Vue.js Render Function
+
+### 왜 필요할까
+- 렌더링되는 Template의 내용을 자바스크립트를 사용하여 동적으로 조작하고자 할 때
+- SFC 구조의 Vue 프로젝트에서 화면을 구성할 때 사용되는 함수; pre-compile시 필요
+
+### SFC에서 Render가 작동하는 양상
+- 각 `.vue` 파일 내의 `<template>` 부분은 `vue-template-compiler`에 의하여 `render()` 함수로 변환되어 해당 SFC 파일에 대응하는 Vue 인스턴스 속성으로 사용된다.
+- SFC는 실제 실행되기 전에 컴파일과 빌드가 이루어지는 것을 전제로 한다(by Webpack). 따라서 인스턴스 옵션에서 `template`은 사용되지 않으며, `<template>`이 `render()`로 변환
+- `template` 속성을 사용한다는 것은 런타임에서 해당 템플릿을 컴파일한다는 의미로, SFC와는 거리가 멀다
 
 ---
 
@@ -302,3 +316,8 @@ computed: {
 - [Vue.js 라이프사이클 이해하기](https://medium.com/witinweb/vue-js-%EB%9D%BC%EC%9D%B4%ED%94%84%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-7780cdd97dd4)
 - [Jest와 Vue Test Utils(VTU)로 Vue 컴포넌트 단위(Unit) 테스트](https://heropy.blog/2020/05/20/vue-test-with-jest/)
 - [Vue 기본 강좌 7-1. slot](https://www.youtube.com/watch?v=qZUV1-FA0-Q)
+- Render Function 관련
+  - [VueJS render 메소드](https://greenmon.dev/2019/02/25/vuejs-render.html)
+  - [Vue에서 컴포넌트 템플릿을 정의하는 7가지 방법](https://github.com/FEDevelopers/tech.description/wiki/Vue%EC%97%90%EC%84%9C-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%ED%85%9C%ED%94%8C%EB%A6%BF%EC%9D%84-%EC%A0%95%EC%9D%98%ED%95%98%EB%8A%94-7%EA%B0%80%EC%A7%80-%EB%B0%A9%EB%B2%95)
+  - [Introduction to Vue Render Functions (w/ Examples)](https://snipcart.com/blog/vue-render-functions)
+  - [Why can Vue render function process SFC](https://stackoverflow.com/questions/49509719/why-can-vue-render-function-process-single-file-component)  
