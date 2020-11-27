@@ -4,6 +4,9 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
+import { ShowSecretMessage } from './plugins';
+Vue.use(ShowSecretMessage);
+
 import { conditional } from './directives';
 Vue.directive('conditional', conditional);
 

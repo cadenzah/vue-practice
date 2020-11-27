@@ -53,7 +53,10 @@ export default {
     hideMessage: function() {
       this.closeDialog();
     }
-  }
+  },
+  created: function() {
+    console.log(this.$secret);
+  },
 };
 </script>
 

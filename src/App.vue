@@ -56,8 +56,8 @@ export default {
       this.$store.state.counter--; // okay, but not preferred
     },
   },
-  created: function() {
-    console.log(this)
+  mounted: function() {
+    // console.log(this)
   }
 };
 </script>
