@@ -6,6 +6,7 @@ Let's learn Vue.js ASAP!
 - Vue.js Fundamentals
 - Vue.js Mixins
 - Vue.js Directives
+- Vue.js Plugins
 - Vue.js Render Function
 - Vuex
 - Vue Router
@@ -211,12 +212,14 @@ export default {
 
 ## Vue.js Mixins
 - 믹스인이 가지고 있는 옵션의 내용을 컴포넌트에 고스란히 Merge
-  - 옵션의 `data`나 `methods` 등에서 겹치는 식별자가 있다면 컴포넌트의 것을 더 우선시
+  - 옵션의 `data`나 `methods` 등에서 겹치는 식별자가 있다면 **컴포넌트의 것을 더 우선시**
 - 믹스인은 믹스인이 적용되는 컴포넌트의 초기화보다 먼저 초기화된다 → 라이프사이클 고려 필요
+- 인스턴스 옵션에서 `mixins` 속성은 배열로 전달되므로, **다중 상속 구현 가능**
+  - 이것이 `.extends`와의 가장 큰 차이
 
 ---
 
-## Vue.js Directives
+## Vue.js Directives (부제: Mixin과 무엇이 다른가)
 - Mixin은 "기능을 확장할 때"에, Directive는 "HTML 요소에 특정 동작 방식을 부여하고자 할 때"에 사용
 - Directive에서 사용되는 각각의 Hook들(`bind`, `update` 등)은 고정된 형식의 함수
 - `function(el, binding, vnode) { }`
@@ -227,6 +230,18 @@ export default {
   - `vnode`는 해당 디렉티브가 실행되는 HTML 요소에 대한 추상화 객체(`VNode`)
     - `vnode.context`를 통하여 현재 컴포넌트(`VueComponent`)에 동일하게 접근 가능
 - `bind`와 `update`의 로직이 동일하다면 하나로 합쳐서 사용해도 된다. 즉, directive 등록시 객체 대신 함수만 전달하는 것
+
+---
+
+## Vue.js Plugins 
+- `install()` 함수를 가지는 객체 형태로 정의
+  - 이 함수 안에서 하고자 하는 작업을 모두 수행하는 형태
+- 이 객체는 이후 `Vue.use(PLUGIN)` 형태로 호출되야 하고, 그 안에서는 `PLUGIN.install()`이 실행되는 식으로 초기화된다
+- 주로 `Vue.prototype`에 값을 추가하는 등의 작업이 이루어진다
+
+### Mixin과 무엇이 다른가
+- Mixin은 개별 컴포넌트 내에, 재사용가능한 기능을 주입
+- Plugin은 전체 컴포넌트 단위에서; 전역적으로 두루 사용될 수 있는 기능을 저장
 
 ---
 
@@ -316,6 +331,7 @@ computed: {
 - [Vue.js 라이프사이클 이해하기](https://medium.com/witinweb/vue-js-%EB%9D%BC%EC%9D%B4%ED%94%84%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-7780cdd97dd4)
 - [Jest와 Vue Test Utils(VTU)로 Vue 컴포넌트 단위(Unit) 테스트](https://heropy.blog/2020/05/20/vue-test-with-jest/)
 - [Vue 기본 강좌 7-1. slot](https://www.youtube.com/watch?v=qZUV1-FA0-Q)
+- [Mixins vs. Plugins vs. extends](https://m.blog.naver.com/z1004man/221791394624)
 - Render Function 관련
   - [VueJS render 메소드](https://greenmon.dev/2019/02/25/vuejs-render.html)
   - [Vue에서 컴포넌트 템플릿을 정의하는 7가지 방법](https://github.com/FEDevelopers/tech.description/wiki/Vue%EC%97%90%EC%84%9C-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%ED%85%9C%ED%94%8C%EB%A6%BF%EC%9D%84-%EC%A0%95%EC%9D%98%ED%95%98%EB%8A%94-7%EA%B0%80%EC%A7%80-%EB%B0%A9%EB%B2%95)
